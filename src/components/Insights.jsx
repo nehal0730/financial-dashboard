@@ -56,9 +56,9 @@ export default function Insights() {
               <p
                 className={`mt-2 text-sm font-semibold xl:text-base ${
                   monthlyComparison.delta > 0
-                    ? 'text-rose-600 dark:text-rose-400'
+                    ? 'text-emerald-600 dark:text-emerald-400'
                     : monthlyComparison.delta < 0
-                      ? 'text-emerald-600 dark:text-emerald-400'
+                      ? 'text-rose-600 dark:text-rose-400'
                       : 'text-slate-500 dark:text-slate-400'
                 }`}
               >

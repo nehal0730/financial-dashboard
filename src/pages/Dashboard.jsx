@@ -90,9 +90,13 @@ export default function Dashboard() {
             </div>
 
             <div className="mt-auto flex flex-wrap items-center gap-3 pt-6 text-xs font-semibold">
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-3 py-1.5 text-emerald-300 xl:text-sm">
-                <FaArrowTrendUp size={10} />
-                {savingsRate > 0 ? '+' : ''}{savingsRate.toFixed(1)}% this month
+              <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 xl:text-sm ${
+                savingsRate >= 0
+                  ? 'bg-emerald-500/15 text-emerald-300'
+                  : 'bg-rose-500/15 text-rose-300'
+              }`}>
+                {savingsRate >= 0 ? <FaArrowTrendUp size={10} /> : <FaArrowTrendDown size={10} />}
+                {savingsRate >= 0 ? '+' : '-'}{Math.abs(savingsRate).toFixed(1)}% this month
               </span>
               <span className="rounded-full bg-slate-500/30 px-3 py-1.5 text-slate-300 xl:text-sm">
                 {lastTransactionDate ? `Updated ${formatDate(lastTransactionDate)}` : 'Awaiting data sync'}
@@ -114,7 +118,7 @@ export default function Dashboard() {
                       : 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300'
                   }`}>
                     {incomeDeltaPercent >= 0 ? <FaArrowTrendUp size={10} /> : <FaArrowTrendDown size={10} />}
-                    {incomeDeltaPercent >= 0 ? '+' : ''}{incomeDeltaPercent.toFixed(1)}%
+                    {incomeDeltaPercent >= 0 ? '+' : '-'}{Math.abs(incomeDeltaPercent).toFixed(1)}%
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 xl:text-sm dark:bg-slate-800 dark:text-slate-300">
@@ -147,11 +151,11 @@ export default function Dashboard() {
                 {expenseDeltaPercent !== null ? (
                   <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold xl:text-sm ${
                     expenseDeltaPercent <= 0
-                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
-                      : 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300'
+                      ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300'
+                      : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
                   }`}>
                     {expenseDeltaPercent <= 0 ? <FaArrowTrendDown size={10} /> : <FaArrowTrendUp size={10} />}
-                    {expenseDeltaPercent >= 0 ? '+' : ''}{expenseDeltaPercent.toFixed(1)}%
+                    {expenseDeltaPercent >= 0 ? '+' : '-'}{Math.abs(expenseDeltaPercent).toFixed(1)}%
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 xl:text-sm dark:bg-slate-800 dark:text-slate-300">
