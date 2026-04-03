@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { FaXmark } from 'react-icons/fa6';
 import { useFinance } from '../context/FinanceContext';
 
@@ -11,6 +12,7 @@ export default function AddTransactionModal({ isOpen, onClose, categories }) {
     amount: '',
     category: categories[0] || 'Food',
     type: 'expense',
+    note: '',
   });
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export default function AddTransactionModal({ isOpen, onClose, categories }) {
       amount: amountValue,
       category: formState.category,
       type: formState.type,
+      note: formState.note.trim(),
     });
 
     onClose();
@@ -53,11 +56,12 @@ export default function AddTransactionModal({ isOpen, onClose, categories }) {
       amount: '',
       category: categories[0] || 'Food',
       type: 'expense',
+      note: '',
     });
   };
 
-  return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
+  const modalElement = (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-700 dark:bg-slate-900">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-900 xl:text-2xl dark:text-slate-100">Add Transaction</h3>
@@ -138,6 +142,20 @@ export default function AddTransactionModal({ isOpen, onClose, categories }) {
             </div>
           </div>
 
+          <div>
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 xl:text-sm dark:text-slate-400">
+              Note (Optional)
+            </label>
+            <textarea
+              name="note"
+              value={formState.note}
+              onChange={handleChange}
+              placeholder="Add a note or description..."
+              rows="3"
+              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 xl:text-base outline-none ring-sky-300 transition focus:ring dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+            />
+          </div>
+
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
@@ -157,4 +175,6 @@ export default function AddTransactionModal({ isOpen, onClose, categories }) {
       </div>
     </div>
   );
+
+  return createPortal(modalElement, document.body);
 }
